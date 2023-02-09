@@ -1,4 +1,4 @@
-# urlmusic
+# OrdinaryPlayer
 
 An Electron application with Vue and TypesSript
 

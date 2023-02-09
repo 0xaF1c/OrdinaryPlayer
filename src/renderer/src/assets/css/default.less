@@ -1,0 +1,61 @@
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: var(--default-color);
+  background-color: var(--default-background-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  * {
+    color: var(--default-color);
+    margin: 0;
+    padding: 0;
+
+    &::-webkit-scrollbar {
+      // display: none;
+      cursor: pointer;
+      width: 3px;
+    }
+    &::-webkit-scrollbar-track {
+      display: none;
+    } /* 滚动条的滑轨背景颜色 */
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10000px;
+      background-color: var(--default-color);
+    } /* 滑块颜色 */
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: inherit;
+  }
+
+  input,
+  button {
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--accent-color-2th);
+    background-color: var(--accent-background-color-2th);
+    transition: border-color 0.25s;
+    border: 1px solid transparent;
+    box-shadow: @default-box-shadow;
+    outline: none;
+
+    &.active {
+      border-color: var(--accent-color-1th);
+    }
+    &:hover {
+      border-color: var(--accent-color-1th);
+    }
+  }
+}

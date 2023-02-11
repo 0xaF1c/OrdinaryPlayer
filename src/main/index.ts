@@ -81,19 +81,6 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 
-/* test */
-import { getTags, getPlaylist } from './api'
-
-const playlistPath = 'D:/库/desktop/myFavorite.playlist - 副本.json'
-async function autorun(): Promise<void> {
-  const playlist = await getPlaylist('', playlistPath)
-
-  getTags('e', playlist[3].path)
-}
-autorun()
-
-/* test */
-
 // handle api invoke
 for (const key in api) {
   ipcMain.handle(key, api[key])

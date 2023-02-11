@@ -6,7 +6,7 @@ export function getID3Tags(_e, path: string): Promise<unknown> {
 }
 
 export function getTags(_e, path: string): Promise<void> {
-  // console.log(parseFile)
+  console.log(parseFile)
 
   // parseFile(path)
   //   .then((metadata) => metadata)

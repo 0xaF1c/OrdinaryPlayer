@@ -1,5 +1,7 @@
 # OrdinaryPlayer
 
+## todo......
+
 An Electron application with Vue and TypesSript
 
 ## Recommended IDE Setup

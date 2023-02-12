@@ -2,56 +2,74 @@
 // import { Howl } from "howler"
 import { reactive } from 'vue'
 import { NSpace, NTable, NAvatar } from 'naive-ui'
-const playlistPath = 'D:/库/desktop/myFavorite.playlist - 副本.json'
-// const playlistPath = 'D:/库/desktop/myFavorite.playlist.json'
+// D:/库/desktop/myFavorite.playlist - 副本.json'
+// D:/库/desktop/myFavorite.playlist - 副本 - 副本.json'
+// D:/库/desktop/myFavorite.playlist.json'
 let playlist: Array<{ path: string }>
-
-const toBePlayedList: Array<{
+type musicStruct = {
   title: string
   album: string
   artist: string
-  composer: string
-  Comment: string
   image: string
   path: string
-}> = reactive([])
+}
+type playlistStruct = Array<musicStruct>
+const state = reactive({
+  toBePlayedList: new Array<musicStruct>(0),
+  nopicture: './build/nopicture.png',
+  playlistPath: 'D:/库/desktop/myFavorite.playlist - 副本.json'
+})
 
-// function parsePlaylist(): void {
-//   playlist.forEach((music, index) => {
-//     const path = music.path
-//     toBePlayedList.push({
-//       path
-//     })
-//     window.api
-//       .getID3Tags(path)
-//       .then((tags) => {
-//         const imageData = tags.images[0]
-//         const image = URL.createObjectURL(new Blob([imageData.data]))
-//         const result = {
-//           title: tags.title,
-//           album: tags.album,
-//           artist: tags.artist,
-//           composer: tags.composer,
-//           Comment: tags.coments,
-//           image
-//         }
-//         console.log(tags)
-        
-//         Object.assign(toBePlayedList[index], result)
-//       })
-//       .catch((err) => err)
-//   })
-// }
+function parsePath(path: string, index: number): void {
+  state.toBePlayedList = []
+  api
+    .getTags(path)
+    .then((tags) => {
+      const imageData = tags.common.picture ? tags.common.picture[0].data : undefined
+      const image = imageData ? URL.createObjectURL(new Blob([imageData])) : undefined
 
-// api.getPlaylist(playlistPath)
-//   .then((result) => {
-//     playlist = JSON.parse(result)
-//     parsePlaylist()
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
+      const result = {
+        path,
+        title: tags.common.title,
+        album: tags.common.album,
+        artist: tags.common.artist,
+        image: image || state.nopicture
+      }
+      state.toBePlayedList[index] = result
+    })
+    .catch((err) => err)
+}
 
+function parsePlaylist(): void {
+  playlist.forEach((music, index) => {
+    const path = music.path
+
+    parsePath(path, index)
+  })
+}
+
+function initPlaylist(): void {
+  playlist.forEach((path) => {
+    state.toBePlayedList.push({
+      path,
+      title: 'notitle',
+      album: 'unknown',
+      artist: 'unknown',
+      image: state.nopicture
+    })
+  })
+}
+
+api
+  .getPlaylist(state.playlistPath)
+  .then((result) => {
+    playlist = result
+    initPlaylist()
+    parsePlaylist()
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 
 // let sound = new Howl({
 //   src: toBePlayedList,
@@ -74,9 +92,10 @@ const toBePlayedList: Array<{
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(music, index) in toBePlayedList" :key="index" class="music">
+        <tr v-for="(music, index) in state.toBePlayedList" :key="index" class="music">
           <td>
-            <n-avatar lazy round :size="100" :src="music.image"></n-avatar>
+            <n-avatar lazy round :size="100" :src="music.image"
+              fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"></n-avatar>
           </td>
           <td>{{ music.title }}</td>
           <td>{{ music.artist }}</td>

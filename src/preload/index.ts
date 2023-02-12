@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { IAudioMetadata } from 'music-metadata'
 
 // Custom APIs for renderer
 const api = {
@@ -8,6 +9,9 @@ const api = {
   },
   test(...args): Promise<string | null> {
     return ipcRenderer.invoke('utils:test', ...args)
+  },
+  getTags(path: string): Promise<IAudioMetadata> {
+    return ipcRenderer.invoke('getTags', path)
   },
   getID3Tags(path: string): Promise<unknown> {
     return ipcRenderer.invoke('getID3Tags', path)

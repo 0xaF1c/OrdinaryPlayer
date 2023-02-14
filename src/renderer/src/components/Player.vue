@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { Howl } from "howler"
+import { Howl } from 'howler'
 import { reactive } from 'vue'
 import { NSpace, NTable, NAvatar } from 'naive-ui'
 // D:/库/desktop/myFavorite.playlist - 副本.json'
@@ -71,12 +71,13 @@ api
     console.log(err)
   })
 
+  // console.log(playlist);
+  
 // let sound = new Howl({
-//   src: toBePlayedList,
+//   src: state.toBePlayedList,
 //   html5: true
 // })
 // sound.play()
-// sound
 </script>
 
 <template>
@@ -94,8 +95,13 @@ api
       <tbody>
         <tr v-for="(music, index) in state.toBePlayedList" :key="index" class="music">
           <td>
-            <n-avatar lazy round :size="100" :src="music.image"
-              fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"></n-avatar>
+            <n-avatar
+              lazy
+              round
+              :size="100"
+              :src="music.image"
+              fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+            ></n-avatar>
           </td>
           <td>{{ music.title }}</td>
           <td>{{ music.artist }}</td>

@@ -1,9 +1,6 @@
 # OrdinaryPlayer
-<<<<<<< HEAD
-=======
 
 ## todo......
->>>>>>> f406901af33b8743a1636a84b0d9badd7402df74
 
 An Electron application with Vue and TypesSript
 
